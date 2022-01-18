@@ -9,8 +9,8 @@ def index(request):
     return render(request, 'board/list.html', context) # context에있는Post 모델 데이터 postList를 board/list.html 파일에 적용하여 HTML 코드로 변환 render(request, templatefile, 사전형객체)
 
 
-def detail(request, postID):
-    post = Post.objects.get(id=postID)
+def detail(request, postId):
+    post = Post.objects.get(id=postId)
     context = {'post': post}
     return render(request, 'board/detail.html', context)
 
