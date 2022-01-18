@@ -19,4 +19,23 @@ def answer_create(request, postId):
     # 답글 추가
     post = get_object_or_404(Post, pk=postId)# Post 모델에서 urls.py 로부터 전달받은 postId 와 동일한 키를 가지는 데이터를 받아와 post 객체에 저장
     post.answer_set.create(content=request.POST.get('content'), date=timezone.now()) # Answer 모델 데이터 생성, post를 pk로 가지는 answer 모델 반환, (Answer 모델이 Post 모델을 참조하고 있으므로 가능)
-    return redirect('board:detail', postId=postId) # Form에서 POST된 데이터 중 name이 content인 엘리먼트가 가지는 값(답글 내용)a
+    return redirect('board:detail', postId=postId) # Form에서 POST된 데이터 중 name이 content인 엘리먼트가 가지는 값(답글 내용)
+
+
+def index(request):
+    # 게시물 목록 출력
+    postList = Post.objects.order_by('-date')
+    context = {'postList': postList}
+    return render(request, 'board/list.html', context)
+
+def detail(request, postId):
+    # 상세보기
+    post = Post.objects.get(id=postId)
+    context = {'post': post}
+    return render(request, 'board/detail.html', context)
+
+def answer_create(request, postId):
+    # 답글 추가
+    post = get_object_or_404(Post, pk=postId)
+    post.answer_set.create(content=request.POST.get('content'), date=timezone.now())
+    return redirect('board:detail', postId=postId)
