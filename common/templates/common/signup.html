@@ -1,0 +1,20 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
+
+<div class="container my-3">
+  <div class="'row my-3">
+    <div class="col-4">
+      <h4>계정생성</h4>
+    </div>
+    <div class="'col-8 text-right">
+      <span>또는 <a href="{% url 'common:login' %} ">로그인 하세요.</a></span>
+    </div>
+  </div>
+<!--  form submit 시 POST 메소드를 사용하여 common의 signup 으로 전달-->
+  <form method="post" actions="{% url 'common:signup' %}" class="post-form">
+    {% csrf_token %}
+<!--    as_p, form 에 포함된 필드를 각각 p 태그 안에 표현-->
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">생성하기</button>
+  </form>
+</div>
